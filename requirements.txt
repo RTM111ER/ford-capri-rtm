@@ -1,0 +1,9 @@
+# Core — required for all scripts
+numpy>=1.20
+
+# Optional — for GPU-accelerated Monte Carlo simulation (Layer 1 + Layer 2)
+# Install one of the following depending on your CUDA version:
+#   pip install cupy-cuda12x    # for CUDA 12.x (Colab default)
+#   pip install cupy-cuda11x    # for CUDA 11.x
+#
+# If CuPy is not installed, simulations fall back to NumPy on CPU (slower).
