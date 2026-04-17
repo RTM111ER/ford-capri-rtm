@@ -22,44 +22,39 @@ Five independent tests are implemented:
 
 ---
 
-## Repository Structure
+## Repository Contents
 
-```
-ford-capri-rtm/
-├── README.md                    ← this file
-├── LICENSE                      ← MIT License
-├── requirements.txt             ← Python dependencies
-├── core/
-│   ├── rtm_equations.py         ← All 123 equations encoded as Python functions
-│   └── verify_real.py           ← Sanity check: Harpaz family → 123/123 closures
-├── simulations/
-│   ├── layer_1_and_2.py         ← Vectorized Monte Carlo simulation (Colab/T4)
-│   └── exhaustive_solver.py     ← Analytical search for uniqueness
-├── analysis/
-│   ├── verify_arithmetic.py     ← 241 arithmetic checks against the book
-│   ├── cross_reference_map.py   ← Which values appear in which findings
-│   └── network_graph.py         ← Finding-to-finding connection graph
-└── docs/
-    └── HOW_TO_RUN.md            ← Step-by-step instructions
-```
+| File | Purpose |
+|------|---------|
+| `rtm_equations.py` | All 123 equations encoded as Python functions |
+| `verify_real.py` | Sanity check — Harpaz family produces 123/123 closures |
+| `verify_arithmetic.py` | 241 arithmetic checks against every step in the book |
+| `layer_1_and_2.py` | Vectorized Monte Carlo simulation (Colab/T4 GPU) |
+| `exhaustive_solver.py` | Analytical search proving solution uniqueness |
+| `cross_reference_map.py` | Maps which values appear across which findings |
+| `network_graph.py` | Finding-to-finding connection graph |
+| `HOW_TO_RUN.md` | Step-by-step reproduction instructions |
+| `README.md` | This file |
+| `LICENSE` | MIT License |
+| `requirements.txt` | Python dependencies |
 
 ---
 
 ## Quick Start — Local CPU
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/ford-capri-rtm.git
+git clone https://github.com/RTM111ER/ford-capri-rtm.git
 cd ford-capri-rtm
 pip install numpy
 
 # Verify real family produces 123/123
-python core/verify_real.py
+python verify_real.py
 
 # Verify every arithmetic step in the book
-python analysis/verify_arithmetic.py
+python verify_arithmetic.py
 
 # Find all families that satisfy 123 equations (exhaustive search)
-python -c "exec(open('simulations/exhaustive_solver.py').read()); main()"
+python -c "exec(open('exhaustive_solver.py').read()); main()"
 ```
 
 The exhaustive solver completes in under 1 second on CPU.
@@ -76,7 +71,7 @@ The Monte Carlo simulation of 100,000,000 random families requires GPU accelerat
    ```
    !pip install cupy-cuda12x
    ```
-4. Paste the entire content of `simulations/layer_1_and_2.py` into a new cell and run it.
+4. Paste the entire content of `layer_1_and_2.py` into a new cell and run it.
 5. In a separate cell, run:
    ```python
    main(n_trials=100_000_000, batch_size=500_000)
@@ -91,7 +86,7 @@ Expected runtime: approximately 100 seconds on T4.
 ### Claim 1: "123 closures for the Harpaz family"
 
 ```bash
-python core/verify_real.py
+python verify_real.py
 ```
 
 Output: `Real Harpaz family closures: 123 / 123`
@@ -114,7 +109,7 @@ LAYER 1 — CLOSURE COUNT
 ### Claim 3: "Exactly one family in 8×10¹⁸ satisfies the system"
 
 ```bash
-python -c "exec(open('simulations/exhaustive_solver.py').read()); main()"
+python -c "exec(open('exhaustive_solver.py').read()); main()"
 ```
 
 Output: `✓ UNIQUE SOLUTION FOUND` — displays the Harpaz family anchors.
@@ -122,7 +117,7 @@ Output: `✓ UNIQUE SOLUTION FOUND` — displays the Harpaz family anchors.
 ### Claim 4: "Every arithmetic step in the book verified"
 
 ```bash
-python analysis/verify_arithmetic.py
+python verify_arithmetic.py
 ```
 
 Output: `TOTAL FAILURES: 0`
@@ -146,7 +141,7 @@ If this code is used in academic or derivative work, please cite:
 ```
 Harpaz, E. (2026). The Ford Capri Identity Matrix.
 RTM — Reflective Time Model, Case File #3.
-Amazon KDP. Code: github.com/YOUR_USERNAME/ford-capri-rtm
+Amazon KDP. Code: github.com/RTM111ER/ford-capri-rtm
 ```
 
 ---
